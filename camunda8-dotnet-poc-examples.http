@@ -1,0 +1,6 @@
+@camunda8_dotnet_poc_examples_HostAddress = http://localhost:5053
+
+GET {{camunda8_dotnet_poc_examples_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
