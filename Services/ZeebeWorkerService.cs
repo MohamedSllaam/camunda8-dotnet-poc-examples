@@ -4,58 +4,70 @@ using Zeebe.Client.Api.Worker;
 namespace camunda8_dotnet_poc_examples.Services;
 public class ZeebeWorkerService : BackgroundService
 {
-    private readonly IZeebeClient _zeebe;
+    private readonly IZeebeClient _client;
 
-    public ZeebeWorkerService(IZeebeClient zeebe)
+    public ZeebeWorkerService()
     {
-        _zeebe = zeebe;
+        _client = ZeebeClient.Builder()
+            .UseGatewayAddress("127.0.0.1:26500") // Zeebe Gateway
+            .UsePlainText()
+            .Build();
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        Console.WriteLine("Starting BPMN workers...");
+        Console.WriteLine("🚀 Zeebe workers starting...");
 
-        // Worker 1: Add employee
-        _zeebe.NewWorker()
+        // Worker for add-to-dept-a
+        _client.NewWorker()
             .JobType("add-to-dept-a")
             .Handler(async (client, job) =>
             {
-                var vars = job.Variables;
-                Console.WriteLine($"Adding employee to Dept A: {vars}");
-
-                await client.NewCompleteJobCommand(job.Key).Send();
+                Console.WriteLine("👔 Employee added to Dept A");
+                await client.NewCompleteJobCommand(job.Key)
+                    .Variables("{\"status\":\"added-to-dept-a\"}")
+                    .Send();
             })
-            .MaxJobsActive(10)
-            .Name("AddEmployeeWorker")
+            .Name("worker-add-to-dept-a")
+            .MaxJobsActive(5)
             .Open();
 
-        // Worker 2: Move employee
-        _zeebe.NewWorker()
+        // Worker for move-to-dept-b
+        _client.NewWorker()
             .JobType("move-to-dept-b")
             .Handler(async (client, job) =>
             {
-                Console.WriteLine("Moving employee to Dept B...");
-                await client.NewCompleteJobCommand(job.Key).Send();
+                Console.WriteLine("📦 Employee moved to Dept B");
+                await client.NewCompleteJobCommand(job.Key)
+                    .Variables("{\"status\":\"moved-to-dept-b\"}")
+                    .Send();
             })
-            .MaxJobsActive(10)
-            .Name("MoveEmployeeWorker")
+            .Name("worker-move-to-dept-b")
+            .MaxJobsActive(5)
             .Open();
 
-        // Worker 3: Send email
-        _zeebe.NewWorker()
+        // Worker for send-email
+        _client.NewWorker()
             .JobType("send-email")
             .Handler(async (client, job) =>
             {
-             //  var email = job.VariablesAsDictionary().GetValueOrDefault("email")?.ToString();
-            //    Console.WriteLine($"Sending email to {email ?? "unknown"}");
-
-                // In real app → send SMTP / SendGrid
-                await client.NewCompleteJobCommand(job.Key).Send();
+                Console.WriteLine("📧 Welcome email sent");
+                await client.NewCompleteJobCommand(job.Key)
+                    .Variables("{\"status\":\"email-sent\"}")
+                    .Send();
             })
+            .Name("worker-send-email")
             .MaxJobsActive(5)
-            .Name("EmailWorker")
             .Open();
 
-        await Task.Delay(-1, stoppingToken); // keep workers alive
+        // Keep background service alive until stopped
+        await Task.Delay(Timeout.Infinite, stoppingToken);
+    }
+
+    public override async Task StopAsync(CancellationToken stoppingToken)
+    {
+        Console.WriteLine("🛑 Stopping Zeebe workers...");
+        _client.Dispose();
+        await base.StopAsync(stoppingToken);
     }
 }
