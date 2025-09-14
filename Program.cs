@@ -21,6 +21,18 @@ builder.Services.AddOpenApi();
 //        .Build();
 //});
 
+builder.Services.AddScoped<IEmailService, EmailService>();
+// Register worker services
+builder.Services.AddHostedService<AddToDeptAWorker>();
+builder.Services.AddHostedService<MoveToDeptBWorker>();
+builder.Services.AddHostedService<SendEmailWorker>();
+
+builder.Services.AddSingleton<IZeebeService, ZeebeService>();
+builder.Services.AddHostedService<ZeebeWorkerService>();
+
+
+
+
 builder.Services.AddSingleton<IZeebeClient>(provider =>
 {
     var config = provider.GetRequiredService<IConfiguration>();
@@ -31,16 +43,6 @@ builder.Services.AddSingleton<IZeebeClient>(provider =>
         .UsePlainText()
         .Build();
 });
-
-// Register worker services
-builder.Services.AddHostedService<AddToDeptAWorker>();
-builder.Services.AddHostedService<MoveToDeptBWorker>();
-builder.Services.AddHostedService<SendEmailWorker>();
-
-builder.Services.AddSingleton<IZeebeService, ZeebeService>();
-builder.Services.AddHostedService<ZeebeWorkerService>();
-
-
 
 var app = builder.Build();
 

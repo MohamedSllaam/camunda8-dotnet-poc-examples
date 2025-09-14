@@ -5,6 +5,7 @@ using Zeebe.Client.Api.Responses;
 using Zeebe.Client.Api.Worker;
 using System.Text.Json;
 
+
 namespace camunda8_dotnet_poc_examples.Workers;
 public class MoveToDeptBWorker : BaseWorkerService
 {

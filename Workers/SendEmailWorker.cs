@@ -1,18 +1,21 @@
 ﻿
+
 using Microsoft.Extensions.Logging;
 using Zeebe.Client;
 using Zeebe.Client.Api.Responses;
 using Zeebe.Client.Api.Worker;
 using System.Text.Json;
+using camunda8_dotnet_poc_examples.Services;
 
+namespace camunda8_dotnet_poc_examples.Workers;
 public class SendEmailWorker : BaseWorkerService
 {
-   // private readonly IEmailService _emailService;
+  //  private readonly IEmailService _emailService;
 
-    public SendEmailWorker(IZeebeClient zeebeClient, ILogger<SendEmailWorker> logger, )
+    public SendEmailWorker(IZeebeClient zeebeClient, ILogger<SendEmailWorker> logger)
         : base(zeebeClient, logger, "send-email", "send-email-worker")
     {
-      //  _emailService = emailService;
+     //   _emailService = emailService;
     }
 
     protected override async Task HandleJob(IJobClient jobClient, IJob job)
@@ -28,7 +31,7 @@ public class SendEmailWorker : BaseWorkerService
             Logger.LogInformation("Sending welcome email to {Email}", variables.Email);
 
             // Use injected service to send email
-          //  await _emailService.SendWelcomeEmailAsync(variables.Email, variables.EmployeeName);
+         //   await _emailService.SendWelcomeEmailAsync(variables.Email, variables.EmployeeName);
 
             // Complete the job with updated variables
             var updatedVariables = new
