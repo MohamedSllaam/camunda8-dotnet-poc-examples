@@ -28,7 +28,10 @@ builder.Services.AddHostedService<MoveToDeptBWorker>();
 builder.Services.AddHostedService<SendEmailWorker>();
 
 builder.Services.AddSingleton<IZeebeService, ZeebeService>();
-builder.Services.AddHostedService<ZeebeWorkerService>();
+
+builder.Services.AddHostedService<ProcessDeploymentService>();
+
+//builder.Services.AddHostedService<ZeebeWorkerService>();
 
 
 

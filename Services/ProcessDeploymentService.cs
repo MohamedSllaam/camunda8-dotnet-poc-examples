@@ -20,7 +20,7 @@ public class ProcessDeploymentService : IHostedService
         {
             // Deploy your BPMN process
             var deployment = await _zeebeClient.NewDeployCommand()
-                .AddResourceFile("Processes/employee-onboarding.bpmn")
+                .AddResourceFile("Resources/test-process.bpmn")
                 .Send();
 
             _logger.LogInformation("Deployed {DeployedProcesses} processes", deployment.Processes.Count);

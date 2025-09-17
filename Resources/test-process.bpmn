@@ -28,7 +28,7 @@
       <bpmn:outgoing>Flow_08kwryu</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_003bbeh" sourceRef="Activity_0jfrsqm" targetRef="Activity_0pni66x" />
-    <bpmn:endEvent id="Event_0w2pod2">
+    <bpmn:endEvent id="Event_0w2pod2" name="End">
       <bpmn:incoming>Flow_08kwryu</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_08kwryu" sourceRef="Activity_0pni66x" targetRef="Event_0w2pod2" />
@@ -55,6 +55,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0w2pod2_di" bpmnElement="Event_0w2pod2">
         <dc:Bounds x="722" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="730" y="145" width="20" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0off9c9_di" bpmnElement="Flow_0off9c9">
         <di:waypoint x="188" y="120" />
