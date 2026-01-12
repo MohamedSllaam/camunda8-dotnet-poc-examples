@@ -1,0 +1,19 @@
+<bpmn:serviceTask id="Task_ShipOrder" name="Ship Order">
+  <bpmn:extensionElements>
+    <zeebe:taskDefinition type="ship-order"/>
+  </bpmn:extensionElements>
+</bpmn:serviceTask>
+
+<bpmn:boundaryEvent id="Boundary_TimerReminder" attachedToRef="Task_ShipOrder" cancelActivity="false" name="24h Reminder">
+  <bpmn:timerEventDefinition>
+    <bpmn:timeDuration>PT24H</bpmn:timeDuration>
+  </bpmn:timerEventDefinition>
+</bpmn:boundaryEvent>
+
+<bpmn:serviceTask id="Task_SendReminder" name="Send Reminder Email">
+  <bpmn:extensionElements>
+    <zeebe:taskDefinition type="send-reminder"/>
+  </bpmn:extensionElements>
+</bpmn:serviceTask>
+
+<bpmn:sequenceFlow sourceRef="Boundary_TimerReminder" targetRef="Task_SendReminder"/>
