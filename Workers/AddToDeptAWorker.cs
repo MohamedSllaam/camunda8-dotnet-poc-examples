@@ -15,6 +15,10 @@ public class AddToDeptAWorker : BaseWorkerService
     {
         Logger.LogInformation("Processing Add to Department A for job: {JobKey}", job.Key);
 
+        Logger.LogInformation("Processing Add to Department A for job: {JobKey}, FlowNodeInstanceKey: {FlowNodeInstanceKey}",
+    job.Key,
+    job.ElementInstanceKey);
+
         try
         {
             // Extract variables from the process
