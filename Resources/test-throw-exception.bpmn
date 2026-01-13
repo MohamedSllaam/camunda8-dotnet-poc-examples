@@ -1,86 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions
-  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-  xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"
-  id="Definitions_1"
-  targetNamespace="http://bpmn.io/schema/bpmn">
-
-	<bpmn:process id="Process_Timer_Test" name="Timer Example" isExecutable="true">
-
-		<!-- START -->
-		<bpmn:startEvent id="StartEvent_1" name="Start">
-			<bpmn:outgoing>Flow_1</bpmn:outgoing>
-		</bpmn:startEvent>
-
-		<!-- SERVICE TASK -->
-		<bpmn:serviceTask id="ServiceTask_1" name="Do Work">
-			<bpmn:extensionElements>
-				<zeebe:taskDefinition type="do-work"/>
-			</bpmn:extensionElements>
-			<bpmn:incoming>Flow_1</bpmn:incoming>
-			<bpmn:outgoing>Flow_2</bpmn:outgoing>
-		</bpmn:serviceTask>
-
-		<!-- INTERMEDIATE TIMER EVENT -->
-		<bpmn:intermediateCatchEvent id="TimerEvent_1" name="Wait 5 Seconds">
-			<bpmn:incoming>Flow_2</bpmn:incoming>
-			<bpmn:outgoing>Flow_3</bpmn:outgoing>
-			<bpmn:timerEventDefinition>
-				<bpmn:timeDuration>PT5S</bpmn:timeDuration>
-			</bpmn:timerEventDefinition>
-		</bpmn:intermediateCatchEvent>
-
-		<!-- END -->
-		<bpmn:endEvent id="EndEvent_1" name="End">
-			<bpmn:incoming>Flow_3</bpmn:incoming>
-		</bpmn:endEvent>
-
-		<!-- FLOWS -->
-		<bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
-		<bpmn:sequenceFlow id="Flow_2" sourceRef="ServiceTask_1" targetRef="TimerEvent_1"/>
-		<bpmn:sequenceFlow id="Flow_3" sourceRef="TimerEvent_1" targetRef="EndEvent_1"/>
-
-	</bpmn:process>
-
-	<!-- DIAGRAM (REQUIRED FOR MODELER) -->
-	<bpmndi:BPMNDiagram id="BPMNDiagram_1">
-		<bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Timer_Test">
-
-			<bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-				<dc:Bounds x="150" y="100" width="36" height="36"/>
-			</bpmndi:BPMNShape>
-
-			<bpmndi:BPMNShape id="ServiceTask_1_di" bpmnElement="ServiceTask_1">
-				<dc:Bounds x="250" y="80" width="100" height="80"/>
-			</bpmndi:BPMNShape>
-
-			<bpmndi:BPMNShape id="TimerEvent_1_di" bpmnElement="TimerEvent_1">
-				<dc:Bounds x="400" y="100" width="36" height="36"/>
-			</bpmndi:BPMNShape>
-
-			<bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
-				<dc:Bounds x="500" y="100" width="36" height="36"/>
-			</bpmndi:BPMNShape>
-
-			<bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
-				<di:waypoint x="186" y="118"/>
-				<di:waypoint x="250" y="118"/>
-			</bpmndi:BPMNEdge>
-
-			<bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
-				<di:waypoint x="350" y="118"/>
-				<di:waypoint x="400" y="118"/>
-			</bpmndi:BPMNEdge>
-
-			<bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
-				<di:waypoint x="436" y="118"/>
-				<di:waypoint x="500" y="118"/>
-			</bpmndi:BPMNEdge>
-
-		</bpmndi:BPMNPlane>
-	</bpmndi:BPMNDiagram>
-
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.38.1">
+  <bpmn:process id="Process_Timer_Test" name="Timer Example" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ServiceTask_1" name="Do Work">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="do-work" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="TimerEvent_1" name="Wait 5 Seconds">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration>PT5S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="EndEvent_1" name="End">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="ServiceTask_1" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="ServiceTask_1" targetRef="TimerEvent_1" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="TimerEvent_1" targetRef="EndEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Timer_Test">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1_di" bpmnElement="ServiceTask_1">
+        <dc:Bounds x="250" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="642" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="650" y="136" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TimerEvent_1_di" bpmnElement="TimerEvent_1">
+        <dc:Bounds x="502" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="136" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="186" y="118" />
+        <di:waypoint x="250" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="350" y="118" />
+        <di:waypoint x="502" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="538" y="118" />
+        <di:waypoint x="642" y="118" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -29,23 +29,28 @@ builder.Services.AddHostedService<SendEmailWorker>();
 
 builder.Services.AddSingleton<IZeebeService, ZeebeService>();
 
-builder.Services.AddHostedService<ProcessDeploymentService>();
+ builder.Services.AddHostedService<ProcessDeploymentService>();
 
 //builder.Services.AddHostedService<ZeebeWorkerService>();
+builder.Services.AddSingleton<IZeebeClient>(_ =>
+    ZeebeClient.Builder()
+        .UseGatewayAddress("localhost:26500")
+        .UsePlainText()   // REQUIRED for local Zeebe
+        .Build()
+);
 
 
 
+//builder.Services.AddSingleton<IZeebeClient>(provider =>
+//{
+//    var config = provider.GetRequiredService<IConfiguration>();
+//    var gatewayAddress = config["Zeebe:GatewayAddress"] ?? "localhost:26500";
 
-builder.Services.AddSingleton<IZeebeClient>(provider =>
-{
-    var config = provider.GetRequiredService<IConfiguration>();
-    var gatewayAddress = config["Zeebe:GatewayAddress"] ?? "localhost:26500";
-
-    return ZeebeClient.Builder()
-        .UseGatewayAddress(gatewayAddress)
-        .UsePlainText()
-        .Build();
-});
+//    return ZeebeClient.Builder()
+//        .UseGatewayAddress(gatewayAddress)
+//        .UsePlainText()
+//        .Build();
+//});
 
 var app = builder.Build();
 

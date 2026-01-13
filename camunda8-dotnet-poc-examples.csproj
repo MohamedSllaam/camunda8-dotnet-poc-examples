@@ -23,4 +23,10 @@
 	  
   </ItemGroup>
 
+
+	<ItemGroup>
+		<Content Include="Resources\test-process.bpmn">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>
